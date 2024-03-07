@@ -1,0 +1,76 @@
+<div class="mt-4">
+    <h4>List Manga</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Img</th>
+                <th scope="col">CreateAt</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each manga}}
+                <tr>
+                    <th scope="row">{{ sum @index 1 }}</th>
+                    <td>{{ this.name }}</td>
+                    <td><img class="card-img-top" src="{{this.img}}" alt="Card image cap"></td>
+                    <td>{{ this.createdAt }}</td>
+                    <td>
+                        <a href="/manga/{{this._id}}/edit" class="btn btn-link">Update</a>
+                        <a href="/manga/{{this._id}}/delete" class="btn btn-link" data-id="{{ this._id}}" data-toggle="modal" data-target="#deleteData" >Delete</a>
+                    </td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+
+<!-- Confirm -->
+<!-- Button trigger modal -->
+
+<!-- Modal -->
+<div id="deleteData" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" >Delete ?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cencel</button>
+        <button id="btnDeleteManga" class="btn btn-danger">Delete Data</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Submit form -->
+<form method="POST" name="deleteForm"></form>
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function(){
+        var mangaId;
+        var deleteForm = document.forms["deleteForm"];
+        var btnDeleteManga = document.getElementById("btnDeleteManga")
+
+        $('#deleteData').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) 
+            mangaId = button.data('id')
+            
+        })
+
+        btnDeleteManga.onclick = function() {
+            deleteForm.action = '/manga/' + mangaId + '?_method=DELETE';
+            deleteForm.submit();
+        }
+    });
+</script>
+

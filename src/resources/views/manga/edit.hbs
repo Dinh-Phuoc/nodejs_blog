@@ -1,0 +1,36 @@
+<form method="POST" action="/manga/{{manga._id}}?_method=PUT">
+
+  <h3>Update Manga</h3>
+
+  <div class="form-group">
+    <label for="name">Manga Name: </label>
+    <input type="text" class="form-control" name="name" value="{{manga.name}}" id="name" placeholder="Enter Name Manga">
+  </div>
+
+  <div class="form-group">
+    <label for="desc">Description: </label>
+    <input type="text" class="form-control" name="desc" value="{{manga.desc}}" id="desc" placeholder=" Description">
+  </div>
+
+  <div class="form-group">
+    <label for="img">Img Link: </label>
+    <input type="text" class="form-control" name="img" value="{{manga.img}}" id="img" placeholder="Enter Img Link">
+  </div>
+
+  <div class="form-group">
+    <label for="author">Author: </label>
+    <input type="text" class="form-control" name="author" value="{{manga.author}}" id="author" placeholder="Enter Author Manga">
+  </div>
+
+  <div class="form-group">
+    <label for="Genres">Genres: </label>
+    <input type="text" class="form-control" name="Genres" value="{{manga.Genres}}" id="Genres" placeholder="Enter Genres">
+  </div>
+
+  <div class="form-group">
+    <label for="Idvideo">Idvideo: </label>
+    <input type="text" class="form-control" name="Idvideo" value="{{manga.Idvideo}}" id="Idvideo" placeholder="Enter Idvideo">
+  </div>
+  
+  <button type="submit" class="btn btn-primary">Update</button>
+</form>
