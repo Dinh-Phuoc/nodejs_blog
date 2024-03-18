@@ -1,0 +1,97 @@
+<div class="mt-4">
+    <div>
+      <h4>Recycle Bin</h4>
+      <a href="/me/stored/manga">List Manga</a>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Img</th>
+                <th scope="col">CreateAt</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each manga}}
+                <tr>
+                    <th scope="row">{{ sum @index 1 }}</th>
+                    <td>{{ this.name }}</td>
+                    <td><img class="card-img-top" src="{{this.img}}" alt="Card image cap"></td>
+                    <td>{{ this.createdAt }}</td>
+                    <td>
+                        <a href="" class="btn btn-link btn-restore" data-id="{{ this._id }}" >Khoi Phuc</a>
+                        <a href="/manga/{{this._id}}/delete" class="btn btn-link" data-id="{{ this._id}}" data-toggle="modal" data-target="#deleteData" >Xoa Vinh Vien</a>
+                    </td>
+                </tr>
+              {{else}}
+                <tr >
+                  <td class="text-center" colspan="5"> Thùng rác trống</td>                  
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+
+<!-- Confirm -->
+<!-- Button trigger modal -->
+
+<!-- Modal -->
+<div id="deleteData" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" >Delete ?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cencel</button>
+        <button id="btnDeleteManga" class="btn btn-danger">Delete Data</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Submit form -->
+<form method="POST" name="restore-form"></form>
+<form method="POST" name="delete-form"></form>
+
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function(){
+        var mangaId;
+        var restoreForm = document.forms["restore-form"];
+        var deleteForm = document.forms["delete-form"];
+        var btnDeleteManga = document.getElementById("btnDeleteManga")
+        var btnRestore = $('.btn-restore');
+        var btnDelete = $('.btn-delete');
+
+
+        $('#deleteData').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            mangaId = button.data('id');       
+        })
+
+        btnDeleteManga.onclick = function() {
+            deleteForm.action = '/manga/' + mangaId + '/force?_method=DELETE';
+            deleteForm.submit();
+        }
+
+        btnRestore.click(function(e) {
+          e.preventDefault();
+
+          var mangaID = $(this).data('id');
+          restoreForm.action = '/manga/' + mangaID + '/restore?_method=PATCH';
+          restoreForm.submit();
+        });
+    });
+</script>
+
